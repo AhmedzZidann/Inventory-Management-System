@@ -4,46 +4,60 @@ import { Item } from './Item';
 
     private items:Item[] = [];
 
-    constructor (items:Item[]){
+    constructor (){
         this.items = [];
     }
 
     public addItem(item:Item){
         this.items.push(item);
+
+        console.log("Your item is added succefully! ");
+        console.log(`Name: ${item.name}`+ " " +`Price: ${item.getPrice()}`+ " " +`Quantity: ${item.getQty()}`);
     }
 
-    public removeItem(itemName:string):void{
-        for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].name === itemName) {
-              this.items.splice(i, 1);
-              break; 
-            }
-          }
+    public removeItem(itemName: string): void {
+      if(this.searchItem(itemName)){
+        this.items = this.items.filter(item => item.name !== itemName);
+        console.log(`Item ${itemName} has been successfully deleted.`);
+      }
+
+     
     }
 
     public viewInventory(){
 
-      if (this.items.length<1){
+      if (!this.items.length){
         console.log("Your Inventory is empty!")
       }
-        for (let i = 0; i < this.items.length; i++) {
-          const item = this.items[i];
-          console.log("Name:", item.name, ", Price:", + item.getPrice(), ", Quantity:", item.getQty());
-          if(item.isLowStock()){
-            console.log("warning: "+ item.name + " is low in stock")
-          }
+
+      for (const item of this.items) {
+        console.log("Name:", item.name, ", Price:", + item.getPrice(), ", Quantity:", item.getQty());
+        if (item.isLowStock()) {
+            console.log("warning: " + item.name + " is low in stock");
         }
+    }
       }
 
       public searchItem(itemName: string): Item | undefined {
-        for (let i = 0; i < this.items.length; i++) {
-          const item = this.items[i];
-          if (item.name === itemName) {
-            return item;
-          }
-        }
-        return undefined;
+
+        const result = this.items.find(item => item.name === itemName);
+
+        if (result) {
+          return result;
+
+      } else {
+          console.log("Item not found.");
+      }
       }
 
+      public updateQtyInInventory(itemName: string, qty: number): void {
+        const item = this.searchItem(itemName);
+        if (item) {
+            item.updateQty(qty);
+        } else {
+            console.log("Item not found.");
+        }
+    }
+      
     }
 

@@ -25,8 +25,10 @@
     public updateQty(newQuantity: number): void {
         if (newQuantity < 0 || !Number.isInteger(newQuantity)) {
             console.log("Invalid quantity: Quantity must be a non-negative integer.");
+        } else {
+            this.qty = newQuantity;
+            console.log(`Quantity for ${this.name} updated successfully to ${this.qty}.`);
         }
-        this.qty = newQuantity;
     }
 
 
@@ -35,6 +37,8 @@
             console.log("Invalid price: Price must be non-negative.");
         }
         else this.price = newPrice;
+
+        
     }
 
 
@@ -46,4 +50,16 @@
             return false;
         }
     }
+
+    public validateItem(price: number, qty: number): string | undefined {
+        if (price < 0 || isNaN(price)) {
+          return "Invalid price: Price must be a non-negative number!";
+        }
+      
+        if (qty < 0 || !Number.isInteger(qty) || isNaN(qty)) {
+          return "Invalid qty: qty must be a positive integer number!";
+        }
+      
+        return undefined; 
+      }
 }   

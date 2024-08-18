@@ -4,7 +4,7 @@ const promptSync = require("prompt-sync");
 const Item_1 = require("./classes/Item");
 const Inventory_1 = require("./classes/Inventory");
 const prompt = promptSync();
-const myInventory = new Inventory_1.Inventory([]);
+const myInventory = new Inventory_1.Inventory();
 while (true) {
     console.log("welcome to Kwentra Inventory Management System!.\n");
     console.log("1. Enter a new Item");
@@ -26,18 +26,14 @@ while (true) {
         let qty = prompt("Please enter Item qty: ");
         const pr = Number(price);
         const qt = Number(qty);
-        if (pr < 0 || isNaN(pr)) {
-            console.log("Invalid price: price must be a postive number!");
-            continue;
-        }
-        if (qt < 0 || !Number.isInteger(qt) || isNaN(qt)) {
-            console.log("Invalid qty: qty must be a postive integer number!");
-            continue;
-        }
         const newItem = new Item_1.Item(name, pr, qt);
-        myInventory.addItem(newItem);
-        console.log("Your item is added succefully! ");
-        console.log(`Name: ${newItem.name}` + " " + `Price: ${newItem.getPrice()}` + " " + `Quantity: ${newItem.getQty()}`);
+        const errorMessage = newItem.validateItem(pr, qt);
+        if (errorMessage) {
+            console.log(errorMessage);
+        }
+        else {
+            myInventory.addItem(newItem);
+        }
     }
     //#############################################################################
     if (selectedAction == "2") {
@@ -51,7 +47,7 @@ while (true) {
     }
     //#############################################################################
     if (selectedAction == "4") {
-        let searchItemName = prompt("Please enter the Item name you need to update the quantity for: ");
+        let searchItemName = prompt("Please enter the Item name you need to Delete: ");
         let result = myInventory.searchItem(searchItemName);
         if (result) {
             console.log(result);
@@ -71,7 +67,7 @@ while (true) {
     }
     //#############################################################################
     if (selectedAction == "5") {
-        let searchItemName = prompt("Please enter the Item name you need to update the price for: ");
+        let searchItemName = prompt("Please enter the Item name you need to Update:");
         let result = myInventory.searchItem(searchItemName);
         if (result) {
             console.log(result);
@@ -92,14 +88,7 @@ while (true) {
     //#############################################################################
     if (selectedAction == "6") {
         let searchItemName = prompt("Please enter the Item name you need to Delete: ");
-        let result = myInventory.searchItem(searchItemName);
-        if (result) {
-            myInventory.removeItem(result.name);
-            console.log(`Item ${result.name} has been successfully deleted.`);
-        }
-        else {
-            console.log("Item not found.");
-        }
+        myInventory.removeItem(searchItemName);
     }
     //#############################################################################
     if (selectedAction == "7") {

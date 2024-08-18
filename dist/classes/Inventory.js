@@ -2,27 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Inventory = void 0;
 class Inventory {
-    constructor(items) {
+    constructor() {
         this.items = [];
         this.items = [];
     }
     addItem(item) {
         this.items.push(item);
+        console.log("Your item is added succefully! ");
+        console.log(`Name: ${item.name}` + " " + `Price: ${item.getPrice()}` + " " + `Quantity: ${item.getQty()}`);
     }
     removeItem(itemName) {
-        for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].name === itemName) {
-                this.items.splice(i, 1);
-                break;
-            }
+        if (this.searchItem(itemName)) {
+            this.items = this.items.filter(item => item.name !== itemName);
+            console.log(`Item ${itemName} has been successfully deleted.`);
         }
     }
     viewInventory() {
-        if (this.items.length < 1) {
+        if (!this.items.length) {
             console.log("Your Inventory is empty!");
         }
-        for (let i = 0; i < this.items.length; i++) {
-            const item = this.items[i];
+        for (const item of this.items) {
             console.log("Name:", item.name, ", Price:", +item.getPrice(), ", Quantity:", item.getQty());
             if (item.isLowStock()) {
                 console.log("warning: " + item.name + " is low in stock");
@@ -30,13 +29,13 @@ class Inventory {
         }
     }
     searchItem(itemName) {
-        for (let i = 0; i < this.items.length; i++) {
-            const item = this.items[i];
-            if (item.name === itemName) {
-                return item;
-            }
+        const result = this.items.find(item => item.name === itemName);
+        if (result) {
+            return result;
         }
-        return undefined;
+        else {
+            console.log("Item not found.");
+        }
     }
 }
 exports.Inventory = Inventory;

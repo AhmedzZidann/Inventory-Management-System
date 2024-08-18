@@ -63,7 +63,7 @@ while(true){
 
     if (selectedAction=="3"){
         
-        let searchItemName= prompt("Please enter Item name you need to search for: ");
+        let searchItemName= prompt("/nPlease enter Item name you need to search for: ");
 
         let result = myInventory.searchItem(searchItemName);
         

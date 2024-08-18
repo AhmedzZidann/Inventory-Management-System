@@ -18,11 +18,12 @@ while(true){
     console.log("6. Remove an Item");
     console.log("7. Exit");
 
-    let selectedAction = prompt("\nPlease select Action you need to take:");
+    let selectedAction = prompt("Please select Action you need to take:");
 
     if (!["1", "2", "3", "4", "5", "6", "7"].includes(selectedAction)) {
         console.log("\nInvalid selection. Please choose a valid option!\n");
-        continue;}
+        continue;
+    }
     
     //#############################################################################
 

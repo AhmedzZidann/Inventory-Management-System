@@ -17,8 +17,10 @@ class Item {
         if (newQuantity < 0 || !Number.isInteger(newQuantity)) {
             console.log("Invalid quantity: Quantity must be a non-negative integer.");
         }
-        else
+        else {
             this.qty = newQuantity;
+            console.log(`Quantity for ${this.name} updated successfully to ${this.qty}.`);
+        }
     }
     updateItemPrice(newPrice) {
         if (newPrice < 0) {

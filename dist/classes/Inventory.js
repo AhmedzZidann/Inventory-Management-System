@@ -37,5 +37,14 @@ class Inventory {
             console.log("Item not found.");
         }
     }
+    updateQtyInInventory(itemName, qty) {
+        const item = this.searchItem(itemName);
+        if (item) {
+            item.updateQty(qty);
+        }
+        else {
+            console.log("Item not found.");
+        }
+    }
 }
 exports.Inventory = Inventory;
